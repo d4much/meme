@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meme Psychogram - Your Memes Know You Better</title>
+    <title>🧠 Meme Psychogram</title>
     <style>
         * {
             margin: 0;
@@ -12,10 +12,10 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            color: #fff;
             min-height: 100vh;
-            color: #f1f5f9;
             padding: 20px;
         }
 
@@ -24,468 +24,385 @@
             margin: 0 auto;
         }
 
-        header {
+        .header {
             text-align: center;
             margin-bottom: 40px;
-            margin-top: 20px;
         }
 
-        h1 {
-            font-size: 2.5rem;
+        .header h1 {
+            font-size: 2.5em;
             margin-bottom: 10px;
-            background: linear-gradient(135deg, #38bdf8, #06b6d4);
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
         }
 
-        .tagline {
-            font-size: 1.1rem;
-            color: #cbd5e1;
-            font-weight: 300;
-        }
-
-        .upload-section {
-            background: rgba(30, 41, 59, 0.8);
-            border: 2px dashed #38bdf8;
-            border-radius: 12px;
-            padding: 40px;
-            text-align: center;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            margin-bottom: 30px;
-        }
-
-        .upload-section:hover {
-            border-color: #06b6d4;
-            background: rgba(30, 41, 59, 0.95);
-        }
-
-        .upload-section.dragover {
-            border-color: #38bdf8;
-            background: rgba(56, 189, 248, 0.1);
-        }
-
-        .upload-icon {
-            font-size: 3rem;
-            margin-bottom: 15px;
-        }
-
-        .upload-text {
-            font-size: 1.2rem;
-            margin-bottom: 10px;
-            font-weight: 500;
-        }
-
-        .upload-hint {
-            font-size: 0.9rem;
-            color: #94a3b8;
-        }
-
-        input[type="file"] {
-            display: none;
-        }
-
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-            gap: 10px;
-            margin-top: 20px;
-            margin-bottom: 30px;
-        }
-
-        .meme-preview {
-            position: relative;
-            border-radius: 8px;
-            overflow: hidden;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid #334155;
-        }
-
-        .meme-preview img {
-            width: 100%;
-            height: 100px;
-            object-fit: cover;
-            cursor: pointer;
-        }
-
-        .remove-meme {
-            position: absolute;
-            top: 5px;
-            right: 5px;
-            background: rgba(239, 68, 68, 0.9);
-            color: white;
-            border: none;
-            border-radius: 50%;
-            width: 24px;
-            height: 24px;
-            cursor: pointer;
-            font-size: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.2s;
-        }
-
-        .meme-preview:hover .remove-meme {
-            opacity: 1;
-        }
-
-        .controls {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        button {
-            flex: 1;
-            padding: 12px 24px;
-            border: none;
-            border-radius: 8px;
-            font-size: 1rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .btn-upload {
-            background: linear-gradient(135deg, #38bdf8, #06b6d4);
-            color: #0f172a;
-        }
-
-        .btn-upload:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(56, 189, 248, 0.3);
-        }
-
-        .btn-analyze {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: white;
-        }
-
-        .btn-analyze:hover:not(:disabled) {
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(16, 185, 129, 0.3);
-        }
-
-        .btn-analyze:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-clear {
-            background: rgba(100, 116, 139, 0.5);
-            color: #cbd5e1;
-        }
-
-        .btn-clear:hover {
-            background: rgba(100, 116, 139, 0.7);
-        }
-
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 40px;
-            background: rgba(30, 41, 59, 0.8);
-            border-radius: 12px;
-            margin-bottom: 30px;
-        }
-
-        .loading.active {
-            display: block;
-        }
-
-        .spinner {
-            width: 50px;
-            height: 50px;
-            border: 4px solid rgba(56, 189, 248, 0.2);
-            border-top: 4px solid #38bdf8;
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 20px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        .loading-text {
-            color: #cbd5e1;
-            font-size: 0.9rem;
-        }
-
-        .results {
-            display: none;
-            animation: fadeIn 0.5s ease;
-        }
-
-        .results.active {
-            display: block;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-
-        .result-card {
-            background: rgba(30, 41, 59, 0.9);
-            border: 1px solid #334155;
-            border-radius: 12px;
-            padding: 30px;
-            margin-bottom: 20px;
-        }
-
-        .archetype {
-            background: linear-gradient(135deg, #38bdf8, #06b6d4);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-            background-clip: text;
-            font-size: 1.8rem;
-            font-weight: 700;
-            margin-bottom: 20px;
-            text-align: center;
-        }
-
-        .insight-section {
-            margin-bottom: 25px;
-        }
-
-        .insight-title {
-            font-size: 1.1rem;
-            font-weight: 600;
-            color: #38bdf8;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .insight-content {
-            color: #cbd5e1;
-            line-height: 1.6;
-            font-size: 0.95rem;
-        }
-
-        .humor-rating {
-            background: rgba(56, 189, 248, 0.1);
-            border-left: 4px solid #38bdf8;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 10px;
-        }
-
-        .rating-bar {
-            display: flex;
-            gap: 4px;
-            margin-top: 10px;
-        }
-
-        .rating-block {
-            flex: 1;
-            height: 8px;
-            background: rgba(56, 189, 248, 0.2);
-            border-radius: 4px;
-        }
-
-        .rating-block.filled {
-            background: linear-gradient(90deg, #38bdf8, #06b6d4);
-        }
-
-        .share-section {
-            background: rgba(16, 185, 129, 0.1);
-            border-left: 4px solid #10b981;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 20px;
-        }
-
-        .share-buttons {
-            display: flex;
-            gap: 10px;
-            margin-top: 10px;
-        }
-
-        .share-btn {
-            flex: 1;
-            padding: 10px;
-            border: 1px solid #10b981;
-            background: rgba(16, 185, 129, 0.1);
-            color: #10b981;
-            border-radius: 6px;
-            cursor: pointer;
-            font-size: 0.9rem;
-            transition: all 0.3s;
-        }
-
-        .share-btn:hover {
-            background: rgba(16, 185, 129, 0.2);
-        }
-
-        .disclaimer {
-            background: rgba(251, 191, 36, 0.1);
-            border-left: 4px solid #fbbf24;
-            padding: 15px;
-            border-radius: 6px;
-            margin-top: 20px;
-            font-size: 0.85rem;
-            color: #fcd34d;
-        }
-
-        .api-key-section {
-            background: rgba(100, 116, 139, 0.2);
-            border: 1px solid #475569;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            display: none;
-        }
-
-        .api-key-section.show {
-            display: block;
-        }
-
-        .api-key-input {
-            width: 100%;
-            padding: 10px;
-            background: rgba(15, 23, 42, 0.8);
-            border: 1px solid #334155;
-            border-radius: 6px;
-            color: #f1f5f9;
-            font-size: 0.9rem;
-            margin-top: 10px;
+        .header .tagline {
+            color: #a0a0a0;
+            font-size: 1.1em;
         }
 
         .settings-toggle {
             position: fixed;
             bottom: 20px;
             right: 20px;
-            width: 50px;
-            height: 50px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #38bdf8, #06b6d4);
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            cursor: pointer;
+            font-size: 24px;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+            transition: transform 0.2s;
+            z-index: 1000;
+        }
+
+        .settings-toggle:hover {
+            transform: scale(1.1);
+        }
+
+        .settings-panel {
+            background: rgba(30, 30, 50, 0.95);
+            border: 2px solid rgba(79, 172, 254, 0.3);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            display: none;
+        }
+
+        .settings-panel.active {
+            display: block;
+        }
+
+        .settings-panel h3 {
+            margin-bottom: 15px;
+            color: #4facfe;
+        }
+
+        .settings-panel input {
+            width: 100%;
+            padding: 12px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 8px;
+            color: #fff;
+            font-size: 14px;
+            margin-bottom: 15px;
+        }
+
+        .settings-panel button {
+            width: 100%;
+            padding: 12px;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            border-radius: 8px;
+            color: #fff;
+            font-weight: bold;
+            cursor: pointer;
+            transition: transform 0.2s;
+        }
+
+        .settings-panel button:hover {
+            transform: translateY(-2px);
+        }
+
+        .upload-area {
+            background: rgba(30, 30, 50, 0.8);
+            border: 3px dashed rgba(79, 172, 254, 0.5);
+            border-radius: 15px;
+            padding: 60px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .upload-area:hover {
+            border-color: #4facfe;
+            background: rgba(30, 30, 50, 0.95);
+        }
+
+        .upload-area.dragover {
+            border-color: #00f2fe;
+            background: rgba(79, 172, 254, 0.1);
+        }
+
+        .upload-icon {
+            font-size: 48px;
+            margin-bottom: 15px;
+        }
+
+        .upload-text {
+            font-size: 1.2em;
+            margin-bottom: 10px;
+        }
+
+        .upload-subtext {
+            color: #a0a0a0;
+            font-size: 0.9em;
+        }
+
+        .meme-gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .meme-item {
+            position: relative;
+            aspect-ratio: 1;
+            border-radius: 10px;
+            overflow: hidden;
+            background: rgba(30, 30, 50, 0.8);
+        }
+
+        .meme-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .meme-item .remove-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: rgba(255, 0, 0, 0.8);
             border: none;
             color: white;
-            font-size: 1.5rem;
             cursor: pointer;
+            font-size: 18px;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 15px rgba(56, 189, 248, 0.3);
         }
 
-        .error {
-            background: rgba(239, 68, 68, 0.1);
-            border-left: 4px solid #ef4444;
-            padding: 15px;
-            border-radius: 6px;
-            color: #fca5a5;
+        .analyze-btn {
+            width: 100%;
+            padding: 20px;
+            background: linear-gradient(45deg, #4facfe 0%, #00f2fe 100%);
+            border: none;
+            border-radius: 12px;
+            color: #fff;
+            font-size: 1.3em;
+            font-weight: bold;
+            cursor: pointer;
+            margin-bottom: 30px;
+            transition: all 0.3s;
+            box-shadow: 0 4px 15px rgba(79, 172, 254, 0.4);
+        }
+
+        .analyze-btn:hover:not(:disabled) {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(79, 172, 254, 0.6);
+        }
+
+        .analyze-btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 40px;
+            display: none;
+        }
+
+        .loading.active {
+            display: block;
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid rgba(79, 172, 254, 0.2);
+            border-top-color: #4facfe;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 20px;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .results {
+            background: rgba(30, 30, 50, 0.8);
+            border-radius: 15px;
+            padding: 40px;
+            display: none;
+        }
+
+        .results.active {
+            display: block;
+        }
+
+        .results h2 {
+            color: #4facfe;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .results-section {
+            margin-bottom: 30px;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 10px;
+            border-left: 4px solid #4facfe;
+        }
+
+        .results-section h3 {
+            color: #00f2fe;
+            margin-bottom: 10px;
+        }
+
+        .results-section p {
+            line-height: 1.6;
+            color: #d0d0d0;
+        }
+
+        .error-message {
+            background: rgba(255, 0, 0, 0.1);
+            border: 2px solid rgba(255, 0, 0, 0.5);
+            border-radius: 10px;
+            padding: 20px;
             margin-bottom: 20px;
             display: none;
         }
 
-        .error.show {
+        .error-message.active {
             display: block;
         }
 
-        .meme-count {
-            color: #94a3b8;
-            font-size: 0.9rem;
-            margin-top: 10px;
+        .error-message strong {
+            color: #ff6b6b;
+        }
+
+        .info-message {
+            background: rgba(79, 172, 254, 0.1);
+            border: 2px solid rgba(79, 172, 254, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            color: #a0a0a0;
+        }
+
+        .info-message strong {
+            color: #4facfe;
         }
 
         @media (max-width: 600px) {
-            h1 {
-                font-size: 1.8rem;
+            .header h1 {
+                font-size: 2em;
             }
 
-            .upload-section {
-                padding: 20px;
-            }
-
-            button {
-                padding: 10px 16px;
-                font-size: 0.9rem;
-            }
-
-            .result-card {
-                padding: 20px;
+            .meme-gallery {
+                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             }
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <header>
+        <div class="header">
             <h1>🧠 Meme Psychogram</h1>
             <p class="tagline">Your memes are snitching on you, and we're here for it.</p>
-        </header>
-
-        <div class="error" id="errorMessage"></div>
-
-        <div class="upload-section" id="uploadSection">
-            <div class="upload-icon">🖼️</div>
-            <div class="upload-text">Drag your memes here or click to upload</div>
-            <div class="upload-hint">Upload 3-20 memes. We'll read your entire personality.</div>
-            <input type="file" id="fileInput" multiple accept="image/*">
         </div>
 
-        <div class="gallery" id="gallery"></div>
-
-        <div class="meme-count" id="memeCount"></div>
-
-        <div class="controls">
-            <button class="btn-upload" id="uploadBtn">Choose Memes</button>
-            <button class="btn-analyze" id="analyzeBtn" disabled>Analyze My Soul</button>
-            <button class="btn-clear" id="clearBtn">Clear</button>
+        <div class="settings-panel" id="settingsPanel">
+            <h3>Anthropic API Key (optional for better analysis)</h3>
+            <input type="password" id="apiKeyInput" placeholder="sk-ant-...">
+            <button onclick="saveApiKey()">Save Key</button>
+            <p style="margin-top: 15px; font-size: 0.9em; color: #a0a0a0;">
+                Get a free key with $5 credit at <a href="https://console.anthropic.com" target="_blank" style="color: #4facfe;">console.anthropic.com</a>
+            </p>
         </div>
+
+        <div class="error-message" id="errorMessage"></div>
+
+        <div class="info-message" id="infoMessage">
+            <strong>⚠️ You need an Anthropic API key to analyze memes.</strong> Click the ⚙️ button to add one. Get one free at console.anthropic.com
+        </div>
+
+        <div class="upload-area" id="uploadArea">
+            <div class="upload-icon">📤</div>
+            <div class="upload-text">Drop your memes here</div>
+            <div class="upload-subtext">or click to browse (3-20 memes)</div>
+            <input type="file" id="fileInput" accept="image/*" multiple style="display: none;">
+        </div>
+
+        <div class="meme-gallery" id="memeGallery"></div>
+
+        <button class="analyze-btn" id="analyzeBtn" onclick="analyzeMemes()" disabled>
+            Upload memes first
+        </button>
 
         <div class="loading" id="loading">
-            <div class="spinner"></div>
-            <div class="loading-text">Judging your life choices... This might take a moment.</div>
+            <div class="loading-spinner"></div>
+            <p>Judging your life choices...</p>
+            <p style="margin-top: 10px; color: #a0a0a0;">This takes about 30 seconds</p>
         </div>
 
         <div class="results" id="results"></div>
     </div>
 
-    <button class="settings-toggle" id="settingsToggle">⚙️</button>
+    <button class="settings-toggle" onclick="toggleSettings()">⚙️</button>
 
     <script>
+        let uploadedMemes = [];
+        let apiKey = localStorage.getItem('anthropic_api_key') || '';
+
+        console.log('Meme Psychogram loaded');
+        console.log('API key present:', !!apiKey);
+
+        // Initialize
+        if (apiKey) {
+            document.getElementById('infoMessage').style.display = 'none';
+            document.getElementById('apiKeyInput').value = apiKey;
+        }
+
+        // Settings panel toggle
+        function toggleSettings() {
+            const panel = document.getElementById('settingsPanel');
+            panel.classList.toggle('active');
+        }
+
+        // Save API key
+        function saveApiKey() {
+            const key = document.getElementById('apiKeyInput').value.trim();
+            if (key) {
+                localStorage.setItem('anthropic_api_key', key);
+                apiKey = key;
+                document.getElementById('infoMessage').style.display = 'none';
+                showError('API key saved! ✓', false);
+                toggleSettings();
+                console.log('API key saved');
+            }
+        }
+
+        // File upload handling
+        const uploadArea = document.getElementById('uploadArea');
         const fileInput = document.getElementById('fileInput');
-        const gallery = document.getElementById('gallery');
-        const uploadSection = document.getElementById('uploadSection');
-        const uploadBtn = document.getElementById('uploadBtn');
-        const analyzeBtn = document.getElementById('analyzeBtn');
-        const clearBtn = document.getElementById('clearBtn');
-        const loading = document.getElementById('loading');
-        const results = document.getElementById('results');
-        const memeCount = document.getElementById('memeCount');
-        const errorMessage = document.getElementById('errorMessage');
-        const settingsToggle = document.getElementById('settingsToggle');
 
-        let selectedMemes = [];
+        uploadArea.addEventListener('click', () => fileInput.click());
 
-        // Check for API key in localStorage
-        let apiKey = localStorage.getItem('anthropic_api_key');
-
-        uploadBtn.addEventListener('click', () => fileInput.click());
-
-        uploadSection.addEventListener('click', () => fileInput.click());
-
-        uploadSection.addEventListener('dragover', (e) => {
+        uploadArea.addEventListener('dragover', (e) => {
             e.preventDefault();
-            uploadSection.classList.add('dragover');
+            uploadArea.classList.add('dragover');
         });
 
-        uploadSection.addEventListener('dragleave', () => {
-            uploadSection.classList.remove('dragover');
+        uploadArea.addEventListener('dragleave', () => {
+            uploadArea.classList.remove('dragover');
         });
 
-        uploadSection.addEventListener('drop', (e) => {
+        uploadArea.addEventListener('drop', (e) => {
             e.preventDefault();
-            uploadSection.classList.remove('dragover');
+            uploadArea.classList.remove('dragover');
             handleFiles(e.dataTransfer.files);
         });
 
@@ -494,272 +411,220 @@
         });
 
         function handleFiles(files) {
-            selectedMemes = [];
-            gallery.innerHTML = '';
+            console.log('Files uploaded:', files.length);
 
-            Array.from(files).slice(0, 20).forEach((file) => {
-                if (file.type.startsWith('image/')) {
+            Array.from(files).forEach(file => {
+                if (file.type.startsWith('image/') && uploadedMemes.length < 20) {
                     const reader = new FileReader();
                     reader.onload = (e) => {
-                        selectedMemes.push({
-                            name: file.name,
+                        uploadedMemes.push({
                             data: e.target.result,
-                            type: file.type
+                            name: file.name
                         });
-                        renderMeme(e.target.result, selectedMemes.length - 1);
-                        updateMemeCount();
-                        analyzeBtn.disabled = selectedMemes.length < 3;
+                        console.log('Meme loaded:', file.name);
+                        updateGallery();
+                        updateAnalyzeButton();
                     };
                     reader.readAsDataURL(file);
                 }
             });
-
-            updateMemeCount();
         }
 
-        function renderMeme(data, index) {
-            const div = document.createElement('div');
-            div.className = 'meme-preview';
-            div.innerHTML = `
-                <img src="${data}" alt="meme">
-                <button class="remove-meme" onclick="removeMeme(${index})">✕</button>
-            `;
-            gallery.appendChild(div);
+        function updateGallery() {
+            const gallery = document.getElementById('memeGallery');
+            gallery.innerHTML = uploadedMemes.map((meme, index) => `
+                <div class="meme-item">
+                    <img src="${meme.data}" alt="Meme ${index + 1}">
+                    <button class="remove-btn" onclick="removeMeme(${index})">×</button>
+                </div>
+            `).join('');
         }
 
         function removeMeme(index) {
-            selectedMemes.splice(index, 1);
-            gallery.innerHTML = '';
-            selectedMemes.forEach((meme, idx) => {
-                renderMeme(meme.data, idx);
-            });
-            updateMemeCount();
-            analyzeBtn.disabled = selectedMemes.length < 3;
+            uploadedMemes.splice(index, 1);
+            console.log('Meme removed, remaining:', uploadedMemes.length);
+            updateGallery();
+            updateAnalyzeButton();
         }
 
-        function updateMemeCount() {
-            const count = selectedMemes.length;
-            if (count > 0) {
-                memeCount.textContent = `${count} meme${count !== 1 ? 's' : ''} selected`;
-                uploadSection.style.display = 'none';
+        function updateAnalyzeButton() {
+            const btn = document.getElementById('analyzeBtn');
+            const count = uploadedMemes.length;
+
+            if (count >= 3 && count <= 20) {
+                btn.disabled = false;
+                btn.textContent = `Analyze My Soul (${count} memes)`;
+            } else if (count > 20) {
+                btn.disabled = true;
+                btn.textContent = `Too many memes! (max 20)`;
+            } else if (count > 0) {
+                btn.disabled = true;
+                btn.textContent = `Upload ${3 - count} more memes`;
             } else {
-                memeCount.textContent = '';
-                uploadSection.style.display = 'block';
+                btn.disabled = true;
+                btn.textContent = 'Upload memes first';
             }
         }
 
-        clearBtn.addEventListener('click', () => {
-            selectedMemes = [];
-            gallery.innerHTML = '';
-            fileInput.value = '';
-            results.classList.remove('active');
-            updateMemeCount();
-            analyzeBtn.disabled = true;
-            errorMessage.classList.remove('show');
-        });
-
-        analyzeBtn.addEventListener('click', analyzeMemes);
-
-        settingsToggle.addEventListener('click', () => {
-            const apiKeySection = document.querySelector('.api-key-section');
-            if (!apiKeySection) {
-                const section = document.createElement('div');
-                section.className = 'api-key-section show';
-                section.innerHTML = `
-                    <label>Anthropic API Key (optional for better analysis)</label>
-                    <input type="password" class="api-key-input" id="apiKeyInput" placeholder="sk-ant-..." value="${apiKey || ''}">
-                    <button style="margin-top: 10px; padding: 8px 16px; background: #38bdf8; color: #0f172a; border: none; border-radius: 6px; cursor: pointer;" onclick="saveApiKey()">Save Key</button>
-                `;
-                document.querySelector('.container').insertBefore(section, document.querySelector('header').nextSibling);
+        function showError(message, isError = true) {
+            const errorDiv = document.getElementById('errorMessage');
+            errorDiv.innerHTML = isError ? `<strong>Error:</strong> ${message}` : message;
+            errorDiv.className = 'error-message active';
+            if (!isError) {
+                errorDiv.style.background = 'rgba(0, 255, 0, 0.1)';
+                errorDiv.style.borderColor = 'rgba(0, 255, 0, 0.5)';
             }
-        });
-
-        function saveApiKey() {
-            const input = document.getElementById('apiKeyInput');
-            apiKey = input.value;
-            if (apiKey) {
-                localStorage.setItem('anthropic_api_key', apiKey);
-                alert('API key saved! Restart the app for better analysis.');
-            }
+            setTimeout(() => {
+                errorDiv.classList.remove('active');
+            }, 5000);
         }
 
         async function analyzeMemes() {
-            if (selectedMemes.length < 3) {
-                showError('Upload at least 3 memes to get a proper psychogram. We need material to work with.');
-                return;
-            }
-
             if (!apiKey) {
-                showError('You need an Anthropic API key to analyze memes. Click the ⚙️ button to add one. Get one free at console.anthropic.com');
+                showError('Please add an API key first. Click the ⚙️ button.');
                 return;
             }
 
-            loading.classList.add('active');
-            results.classList.remove('active');
-            errorMessage.classList.remove('show');
+            if (uploadedMemes.length < 3) {
+                showError('Please upload at least 3 memes.');
+                return;
+            }
+
+            console.log('Starting analysis with', uploadedMemes.length, 'memes');
+
+            // Show loading
+            document.getElementById('loading').classList.add('active');
+            document.getElementById('results').classList.remove('active');
+            document.getElementById('errorMessage').classList.remove('active');
+            document.getElementById('analyzeBtn').disabled = true;
 
             try {
-                // Create image content for Claude
-                const imageContent = selectedMemes.map(meme => ({
-                    type: "image",
-                    source: {
-                        type: "base64",
-                        media_type: meme.type,
-                        data: meme.data.split(',')[1]
-                    }
-                }));
+                // Prepare images for API
+                const imageContents = uploadedMemes.map(meme => {
+                    // Extract base64 data
+                    const base64Data = meme.data.split(',')[1];
+                    const mediaType = meme.data.match(/^data:(image\/\w+);base64,/)[1];
 
-                const textContent = {
-                    type: "text",
-                    text: `You are a psychologist and meme expert analyzing someone's personality through their saved memes. Based on these ${selectedMemes.length} memes, generate a detailed but conversational "Meme Psychogram."
+                    return {
+                        type: "image",
+                        source: {
+                            type: "base64",
+                            media_type: mediaType,
+                            data: base64Data
+                        }
+                    };
+                });
 
-IMPORTANT - Maintain this conversational, peer-like tone throughout:
-- Talk like a friend who's known them for years, not a clinical therapist
-- Roast lovingly but with genuine insight
-- Be specific, not generic
-- Use humor to soften hard truths
-- Acknowledge absurdity where it exists
-- Sound natural and real, not corporate
+                console.log('Images prepared, calling API...');
 
-Generate a JSON response with this exact structure (no markdown, just valid JSON):
-{
-  "archetype": "A catchy 2-3 word label like 'Existential Professional' or 'Dead Bedroom Dad'",
-  "psychogram": "2-3 sentences of main insight, conversational tone, calls them out with humor",
-  "life_situation": "What their life situation appears to be (age indicators, family status, work stress, etc.)",
-  "stress_indicators": "What they're stressed about based on meme themes",
-  "coping_style": "How they're coping (dark humor, philosophical, avoidant, etc.)",
-  "humor_category": "The primary humor style (Existential, Work Stress, Financial Anxiety, Relationship Frustration, Mental Health, Self-Care, Technical, Wholesome Chaos)",
-  "humor_sophistication": 1-10,
-  "key_insights": [
-    "First insight - be specific and conversational",
-    "Second insight - no generic stuff",
-    "Third insight - tie it to their memes",
-    "Fourth insight - acknowledge the real shit"
-  ],
-  "mental_health_note": "A supportive but honest assessment. If they seem to be genuinely struggling, acknowledge it and provide encouragement. Keep it real but kind.",
-  "the_roast": "One line that perfectly captures their entire vibe in a funny way"
-}
-
-Make this REAL. Make them feel seen. Not judged, just understood.`
-                };
-
-                const response = await fetch('https://api.anthropic.com/v1/messages/create', {
+                // Call Anthropic API
+                const response = await fetch('https://api.anthropic.com/v1/messages', {
                     method: 'POST',
                     headers: {
-                        'content-type': 'application/json',
+                        'Content-Type': 'application/json',
                         'x-api-key': apiKey,
                         'anthropic-version': '2023-06-01'
                     },
                     body: JSON.stringify({
                         model: 'claude-3-5-sonnet-20241022',
-                        max_tokens: 1500,
-                        messages: [
-                            {
-                                role: 'user',
-                                content: [textContent, ...imageContent]
-                            }
-                        ]
+                        max_tokens: 2000,
+                        messages: [{
+                            role: 'user',
+                            content: [
+                                ...imageContents,
+                                {
+                                    type: "text",
+                                    text: `You are analyzing someone's saved meme collection for their personality psychogram. Look at these ${uploadedMemes.length} memes and generate a comprehensive, conversational analysis.
+
+TONE: Talk like a peer who knows them well, not a corporate product. Be specific, funny, and honest. Roast lovingly. Reference actual content you see in the memes.
+
+Generate a psychogram with these sections:
+
+1. **ARCHETYPE**: A catchy 2-4 word label (e.g., "Existential Professional", "Corporate Survivor", "Wholesome Chaos Goblin")
+
+2. **YOUR VIBE**: One sentence capturing their essence based on what you see.
+
+3. **WHAT'S REALLY GOING ON**: 
+   - Life situation you detect
+   - Stress sources visible in memes  
+   - How they're coping
+   Be specific about what you see in the images.
+
+4. **HUMOR TASTE**: 
+   - Category (existential, dark, wholesome, etc.)
+   - Sophistication rating (1-10)
+
+5. **KEY INSIGHTS**: 4 specific observations from the memes (not generic).
+
+6. **REAL TALK**: Mental health check-in. Supportive but honest. Reference patterns you notice.
+
+7. **THE ROAST**: One brutal but funny one-liner that captures their whole deal.
+
+8. **DISCLAIMER**: Brief note this is for entertainment.
+
+Keep it conversational throughout. Be specific about what you actually see in the memes - don't make generic statements.`
+                                }
+                            ]
+                        }]
                     })
                 });
 
+                console.log('API response status:', response.status);
+
                 if (!response.ok) {
                     const errorData = await response.json();
-                    throw new Error(errorData.error?.message || 'API Error');
+                    console.error('API error:', errorData);
+                    throw new Error(errorData.error?.message || `API returned ${response.status}`);
                 }
 
                 const data = await response.json();
-                const analysisText = data.content[0].text;
+                console.log('API response received');
 
-                // Parse JSON response
-                let analysis;
-                try {
-                    analysis = JSON.parse(analysisText);
-                } catch (e) {
-                    // Try to extract JSON from text
-                    const jsonMatch = analysisText.match(/\{[\s\S]*\}/);
-                    if (jsonMatch) {
-                        analysis = JSON.parse(jsonMatch[0]);
-                    } else {
-                        throw new Error('Could not parse analysis response');
-                    }
-                }
-
+                const analysis = data.content[0].text;
                 displayResults(analysis);
 
             } catch (error) {
-                showError(`Analysis failed: ${error.message}`);
-                console.error(error);
+                console.error('Analysis error:', error);
+                showError(`Analysis failed: ${error.message}. Check console for details.`);
             } finally {
-                loading.classList.remove('active');
+                document.getElementById('loading').classList.remove('active');
+                document.getElementById('analyzeBtn').disabled = false;
             }
         }
 
-        function displayResults(analysis) {
-            const ratingFilled = Math.round(analysis.humor_sophistication);
+        function displayResults(analysisText) {
+            console.log('Displaying results');
 
-            results.innerHTML = `
-                <div class="result-card">
-                    <div class="archetype">${analysis.archetype}</div>
+            const resultsDiv = document.getElementById('results');
 
-                    <div class="insight-section">
-                        <div class="insight-title">💭 Your Vibe</div>
-                        <div class="insight-content">${analysis.psychogram}</div>
-                    </div>
+            // Parse markdown-style sections
+            const sections = analysisText.split(/\*\*(.+?)\*\*/g);
 
-                    <div class="insight-section">
-                        <div class="insight-title">🎯 What's Really Going On</div>
-                        <div class="insight-content">
-                            <strong>Life Situation:</strong> ${analysis.life_situation}<br><br>
-                            <strong>Stress Triggers:</strong> ${analysis.stress_indicators}<br><br>
-                            <strong>Coping Mechanism:</strong> ${analysis.coping_style}
+            let html = '<h2>Your Meme Psychogram</h2>';
+
+            for (let i = 1; i < sections.length; i += 2) {
+                const title = sections[i];
+                const content = sections[i + 1]?.trim() || '';
+
+                if (content) {
+                    html += `
+                        <div class="results-section">
+                            <h3>${title}</h3>
+                            <p>${content.replace(/
+/g, '<br>')}</p>
                         </div>
-                    </div>
+                    `;
+                }
+            }
 
-                    <div class="insight-section">
-                        <div class="insight-title">😂 Your Humor Taste</div>
-                        <div class="humor-rating">
-                            <div><strong>${analysis.humor_category}</strong> | Sophistication: ${analysis.humor_sophistication}/10</div>
-                            <div class="rating-bar">
-                                ${Array(10).fill(0).map((_, i) => 
-                                    `<div class="rating-block ${i < ratingFilled ? 'filled' : ''}"></div>`
-                                ).join('')}
-                            </div>
-                        </div>
-                    </div>
+            resultsDiv.innerHTML = html;
+            resultsDiv.classList.add('active');
 
-                    <div class="insight-section">
-                        <div class="insight-title">🔍 Key Insights</div>
-                        <div class="insight-content">
-                            <ul style="margin-left: 20px; line-height: 2;">
-                                ${analysis.key_insights.map(insight => `<li>${insight}</li>`).join('')}
-                            </ul>
-                        </div>
-                    </div>
-
-                    <div class="insight-section">
-                        <div class="insight-title">❤️ Real Talk</div>
-                        <div class="insight-content">${analysis.mental_health_note}</div>
-                    </div>
-
-                    <div class="share-section">
-                        <strong>✨ ${analysis.the_roast}</strong>
-                    </div>
-
-                    <div class="disclaimer">
-                        ⚠️ This is for entertainment and self-reflection, not medical advice. If you're genuinely struggling, talk to someone real. But also? Your memes don't lie.
-                    </div>
-                </div>
-            `;
-
-            results.classList.add('active');
-            results.scrollIntoView({ behavior: 'smooth' });
+            // Scroll to results
+            resultsDiv.scrollIntoView({ behavior: 'smooth' });
         }
 
-        function showError(message) {
-            errorMessage.textContent = message;
-            errorMessage.classList.add('show');
-            loading.classList.remove('active');
-        }
+        console.log('Script initialized');
     </script>
 </body>
 </html>
